@@ -8,6 +8,13 @@ from app import app
 
 engine = Engine(app)
 
+@engine.define
+def printtest(**params):
+    if 'name' in params:
+        print 'Hello, {}!'.format(params['name'])
+    else:
+        log.info('log.info')
+        print 'Hello, LeanCloud!'
 
 @engine.define
 def hello(**params):
@@ -52,9 +59,9 @@ def qiandao_115_marx99(**params):
     s = requests.Session()
     r1= s.post(url115,headers=headers)
     if r1.status_code ==200:
-        return 'qiandao_115_marx99 OK'
+        print ('qiandao_115_marx99 OK')
     else:
-        return "qiandao_115_marx99 error:" + r1.status_code
+        print ('qiandao_115_marx99 error:' + r1.status_code)
  
 @engine.define
 def qiandao_115_xiaohao(**params):
@@ -81,9 +88,9 @@ def qiandao_115_xiaohao(**params):
     s = requests.Session()
     r1= s.post(url115,headers=headers)
     if r1.status_code ==200:
-        return 'qiandao_115_xiaohao OK'
+        print ('qiandao_115_xiaohao OK')
     else:
-        return "qiandao_115_xiaohao error:" + r1.status_code
+        print ('qiandao_115_xiaohao error:' + r1.status_code)
   
 @engine.define
 def qiandao_guorn(**params):
@@ -103,7 +110,7 @@ def qiandao_guorn(**params):
     r1= s.post("https://guorn.com/score/signup",headers=headers,verify=False)
 
     if r1.status_code ==200:
-        return 'qiandao_guorn OK'
+        print ('qiandao_guorn OK')
     else:
-        return "qiandao_guorn error:" + r1.status_code
+        print ('qiandao_guorn error:' + r1.status_code)
                
