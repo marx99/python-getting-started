@@ -11,10 +11,10 @@ engine = Engine(app)
 @engine.define
 def printtest(**params):
     if 'name' in params:
-        print 'Hello, {}!'.format(params['name'])
+        print ('Hello, {}!'.format(params['name']))
     else:
         log.info('log.info')
-        print 'Hello, LeanCloud!'
+        print ('Hello, LeanCloud!')
 
 @engine.define
 def hello(**params):
