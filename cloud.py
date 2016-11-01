@@ -13,7 +13,7 @@ def printtest(**params):
     if 'name' in params:
         print ('Hello, {}!'.format(params['name']))
     else:
-        log.info('log.info')
+        #log.info('log.info')
         print ('Hello, LeanCloud!')
 
 @engine.define
