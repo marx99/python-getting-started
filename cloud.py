@@ -62,7 +62,12 @@ def qiandao_115_marx99(**params):
         print ('qiandao_115_marx99 OK')
     else:
         print ('qiandao_115_marx99 error:' + r1.status_code)
- 
+        
+    geturl = 'http://web.api.115.com/user/sign?start=2016-11-01&_=1478610072924'
+    getr = requests.get(geturl,headers = headers)
+    
+    print(getr.json())
+    
 @engine.define
 def qiandao_115_xiaohao(**params):
     
@@ -91,7 +96,12 @@ def qiandao_115_xiaohao(**params):
         print ('qiandao_115_xiaohao OK')
     else:
         print ('qiandao_115_xiaohao error:' + r1.status_code)
-  
+
+    geturl = 'http://web.api.115.com/user/sign?start=2016-11-01&_=1478610072924'
+    getr = requests.get(geturl,headers = headers)
+    
+    print(getr.json())
+    
 @engine.define
 def qiandao_guorn(**params):
     
@@ -114,3 +124,49 @@ def qiandao_guorn(**params):
     else:
         print ('qiandao_guorn error:' + r1.status_code)
                
+        
+@engine.define
+def qiandao_115_1864081(**params):
+        
+    #1864081 签到
+    
+    postheaders = {
+        'Host': 'web.api.115.com',
+        'Connection': 'keep-alive',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept-Encoding': 'gzip, deflate',
+        'Accept-Language': 'zh-cn',
+        'Accept': '*/*',
+        'Origin': 'http://web.api.115.com',
+        'Content-Length': '0',
+        'Connection': 'keep-alive',
+        'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Mobile/11D257 UPad/6.2.0',
+        'Referer': 'http://web.api.115.com/bridge_2.0.html?namespace=FS.DataSrv&api=UDataAPI&_t=v5',
+        'Cookie': 'CID=75a2513cf5f55d0eb20510d701e354ed; SEID=e4bee56b359d5fbe50814a98857617657ffda3200e72e804f66a9a8e22edaf851a000ee6b79bd77e2630fb9c784bfa618700d78d5f4039bfad9ab17f; ssov_592637961=0_592637961_ed7d57ec15b95004e985cae17b31a407; UID=592637961_H1_1478431292'
+    }
+    
+    posturl='http://web.api.115.com/user/sign'
+    postr = requests.post(posturl,headers = postheaders)
+    if postr.status_code ==200:
+        print( 'qiandao_115_1864081 OK')
+    else:
+        print( "qiandao_115_1864081 error:" + postr.status_code)
+    
+    #签到结果取得
+    getheaders = {
+        'Host': 'web.api.115.com',
+        'Accept-Encoding': 'gzip, deflate',
+        'Cookie': 'CID=75a2513cf5f55d0eb20510d701e354ed; SEID=e4bee56b359d5fbe50814a98857617657ffda3200e72e804f66a9a8e22edaf851a000ee6b79bd77e2630fb9c784bfa618700d78d5f4039bfad9ab17f; ssov_592637961=0_592637961_ed7d57ec15b95004e985cae17b31a407; UID=592637961_H1_1478431292',
+        'Connection': 'keep-alive',
+        'Connection': 'keep-alive',
+        'Accept': '*/*',
+        'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Mobile/11D257 UPad/6.2.0',
+        'Referer': 'http://web.api.115.com/bridge_2.0.html?namespace=FS.DataSrv&api=UDataAPI&_t=v5',
+        'Accept-Language': 'zh-cn',
+        'X-Requested-With': 'XMLHttpRequest'
+    }
+    
+    geturl = 'http://web.api.115.com/user/sign?start=2016-11-01&_=1478610072924'
+    getr = requests.get(geturl,headers = getheaders)
+    
+    print(getr.json())
