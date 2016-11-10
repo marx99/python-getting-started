@@ -58,10 +58,7 @@ def qiandao_115_marx99(**params):
     url115 = 'http://web.api.115.com/user/sign'
     s = requests.Session()
     r1= s.post(url115,headers=headers)
-    if r1.status_code ==200:
-        print ('qiandao_115_marx99 OK')
-    else:
-        print ('qiandao_115_marx99 error:' + r1.status_code)
+    print ('qiandao_115_marx99 ',r1.status_code,r1.json())
         
     geturl = 'http://web.api.115.com/user/sign?start=2016-11-01&_=1478610072924'
     getr = requests.get(geturl,headers = headers)
@@ -92,10 +89,7 @@ def qiandao_115_xiaohao(**params):
     url115 = 'http://web.api.115.com/user/sign'
     s = requests.Session()
     r1= s.post(url115,headers=headers)
-    if r1.status_code ==200:
-        print ('qiandao_115_xiaohao OK')
-    else:
-        print ('qiandao_115_xiaohao error:' + r1.status_code)
+    print ('qiandao_115_135555 ',r1.status_code,r1.json())
 
     geturl = 'http://web.api.115.com/user/sign?start=2016-11-01&_=1478610072924'
     getr = requests.get(geturl,headers = headers)
@@ -147,10 +141,8 @@ def qiandao_115_1864081(**params):
     
     posturl='http://web.api.115.com/user/sign'
     postr = requests.post(posturl,headers = postheaders)
-    if postr.status_code ==200:
-        print( 'qiandao_115_1864081 OK')
-    else:
-        print( "qiandao_115_1864081 error:" + postr.status_code)
+    #result output
+    print( 'qiandao_115_1864081 ',postr.status_code,postr.json())
     
     #签到结果取得
     getheaders = {
