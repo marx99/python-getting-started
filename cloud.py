@@ -134,7 +134,8 @@ def qiandao_115_1864081(**params):
         'Origin': 'http://web.api.115.com',
         'Content-Length': '0',
         'Connection': 'keep-alive',
-        'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Mobile/11D257 UPad/6.2.0',
+        'User-Agent': 'Mozilla/5.0 (Linux; Android 4.4.4; 2014811 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36 115disk/6.2.1',
+        #'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Mobile/11D257 UPad/6.2.0',
         'Referer': 'http://web.api.115.com/bridge_2.0.html?namespace=FS.DataSrv&api=UDataAPI&_t=v5',
         'Cookie': 'CID=75a2513cf5f55d0eb20510d701e354ed; SEID=e4bee56b359d5fbe50814a98857617657ffda3200e72e804f66a9a8e22edaf851a000ee6b79bd77e2630fb9c784bfa618700d78d5f4039bfad9ab17f; ssov_592637961=0_592637961_ed7d57ec15b95004e985cae17b31a407; UID=592637961_H1_1478431292'
     }
