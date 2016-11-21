@@ -4,7 +4,7 @@ from leancloud import Engine
 from leancloud import LeanEngineError
 import requests
 from app import app
-
+import time
 
 engine = Engine(app)
 
@@ -32,7 +32,22 @@ def before_todo_save(todo):
     if len(content) >= 240:
         todo.set('content', content[:240] + ' ...')
 
-        
+@engine.define
+def qiandao_jd():
+    
+    headers={
+        'Host': 'gw-e.jd.com',
+        'Connection': 'Keep-Alive',
+        'User-Agent': 'JDRead 2.6.3 rv: (android; android OS 4.4.4; zh_CN)',
+        'Cookie': 'wskey=AAFYLGPZAEBR6ylOakGVtcRiV_zeGiN1ktIVhKxd2QLVy67AGwGJnSf011hv4txqqVqCQRMTelqMkZzmqCsLT4ZWPD2ZLtPj',
+        'Cookie2': '$Version=1',
+        'Accept-Encoding': 'gzip'    
+    }
+    geturl = 'https://gw-e.jd.com/client.action?build=&osVersion=4.4.4&jds=' + str(round(time.time() * 1000)) + '&functionId=signGetScore&clientVersion=2.6.3&subunionId=yd001&appId=1&os=android&client=android&uuid=867622023933180-9c99a0b5ebd5&unionId=350268299&model=2014811&brand=Xiaomi&screen=720*1280'
+    
+#    print(geturl)
+    jd_result = requests.get(geturl,headers = headers,verify=False)
+    print(jd_result.json())     
 
 @engine.define
 def qiandao_115_marx99(**params):
