@@ -5,6 +5,9 @@ from leancloud import LeanEngineError
 import requests
 from app import app
 import time
+import smtplib  
+from email.mime.text import MIMEText  
+from email.header import Header  
 
 engine = Engine(app)
 
@@ -47,7 +50,8 @@ def qiandao_jd():
     
 #    print(geturl)
     jd_result = requests.get(geturl,headers = headers,verify=False)
-    print(jd_result.json())     
+    print(jd_result.json())  
+    sendmail_local('qiandao_jd',jd_result.json())
 
 @engine.define
 def qiandao_115_marx99(**params):
@@ -132,49 +136,29 @@ def qiandao_guorn(**params):
         print ('qiandao_guorn OK')
     else:
         print ('qiandao_guorn error:' + r1.status_code)
-               
-        
+
 @engine.define
-def qiandao_115_1864081(**params):
+def sendmail_local(subject,content):
+    sender = os.environ['sendmail_to_mail'] 
+    receiver = os.environ['sendmail_from_mail'] 
+    #subject = 'python email test'  
+    
+    smtpserver = 'smtp.126.com'  
+    username = os.environ['sendmail_from_mail']  
+    password = os.environ['sendmail_from_password']  
+    
+    #os.environ['LEANCLOUD_APP_ID']
+    
+    msg = MIMEText(content,'text','utf-8')#中文需参数‘utf-8’，单字节字符不需要  
+    msg['Subject'] = Header(subject, 'utf-8')  
+      
+    try:   
+        smtp = smtplib.SMTP()  
+        smtp.connect(smtpserver)  
+        smtp.login(username, password)  
+        smtp.sendmail(sender, receiver, msg.as_string())  
+        smtp.quit()  
+        print('sendmail OK!')
+    except smtplib.SMTPException:
+        print ("Error: sendmail error")
         
-    #1864081 签到
-    
-    postheaders = {
-        'Host': 'web.api.115.com',
-        'Connection': 'keep-alive',
-        'X-Requested-With': 'XMLHttpRequest',
-        'Accept-Encoding': 'gzip, deflate',
-        'Accept-Language': 'zh-cn',
-        'Accept': '*/*',
-        'Origin': 'http://web.api.115.com',
-        'Content-Length': '0',
-        'Connection': 'keep-alive',
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 4.4.4; 2014811 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36 115disk/6.2.1',
-        #'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Mobile/11D257 UPad/6.2.0',
-        'Referer': 'http://web.api.115.com/bridge_2.0.html?namespace=FS.DataSrv&api=UDataAPI&_t=v5',
-        'Cookie': 'CID=75a2513cf5f55d0eb20510d701e354ed; SEID=e4bee56b359d5fbe50814a98857617657ffda3200e72e804f66a9a8e22edaf851a000ee6b79bd77e2630fb9c784bfa618700d78d5f4039bfad9ab17f; ssov_592637961=0_592637961_ed7d57ec15b95004e985cae17b31a407; UID=592637961_H1_1478431292'
-    }
-    
-    posturl='http://web.api.115.com/user/sign'
-    postr = requests.post(posturl,headers = postheaders)
-    #result output
-    print( 'qiandao_115_1864081 ',postr.status_code,postr.json())
-    
-    #签到结果取得
-    getheaders = {
-        'Host': 'web.api.115.com',
-        'Accept-Encoding': 'gzip, deflate',
-        'Cookie': 'CID=75a2513cf5f55d0eb20510d701e354ed; SEID=e4bee56b359d5fbe50814a98857617657ffda3200e72e804f66a9a8e22edaf851a000ee6b79bd77e2630fb9c784bfa618700d78d5f4039bfad9ab17f; ssov_592637961=0_592637961_ed7d57ec15b95004e985cae17b31a407; UID=592637961_H1_1478431292',
-        'Connection': 'keep-alive',
-        'Connection': 'keep-alive',
-        'Accept': '*/*',
-        'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Mobile/11D257 UPad/6.2.0',
-        'Referer': 'http://web.api.115.com/bridge_2.0.html?namespace=FS.DataSrv&api=UDataAPI&_t=v5',
-        'Accept-Language': 'zh-cn',
-        'X-Requested-With': 'XMLHttpRequest'
-    }
-    
-    geturl = 'http://web.api.115.com/user/sign?start=2016-11-01&_=1478610072924'
-    getr = requests.get(geturl,headers = getheaders)
-    
-    print(getr.json())
