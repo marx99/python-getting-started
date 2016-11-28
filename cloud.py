@@ -210,19 +210,21 @@ def qiandao_115_15694636714():
 @engine.define
 def send_mail_test():
     #sendmail_local('title标题','虫哦你特纳那天')
-    sender = '15942888252@139.com'  
-    receiver = '15942888252@139.com'  
-    subject = '这是一个测试邮件1 from leancn'  
-    smtpserver = 'smtp.139.com'  
-    username = '15942888252@139.com'
-    password = '6547899x'
+    sender = 'from@runoob.com'
+    receivers = ['15942888252@139.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
 
-    msg = MIMEText('中文需参数‘utf-8’，单字节字符不需要 ','text','utf-8')#中文需参数‘utf-8’，单字节字符不需要  
-    msg['Subject'] = Header(subject, 'utf-8')  
+    # 三个参数：第一个为文本内容，第二个 plain 设置文本格式，第三个 utf-8 设置编码
+    message = MIMEText('Python 邮件发送测试...', 'plain', 'utf-8')
+    message['From'] = Header("菜鸟教程", 'utf-8')
+    message['To'] =  Header("测试", 'utf-8')
 
-    smtp = smtplib.SMTP()  
-    smtp.connect(smtpserver)  
-    smtp.login(username, password)  
-    smtp.sendmail(sender, receiver, msg.as_string())  
-    smtp.quit()  
-    print("send mail OK!")
+    subject = 'Python SMTP 邮件测试'
+    message['Subject'] = Header(subject, 'utf-8')
+
+
+    try:
+        smtpObj = smtplib.SMTP('localhost')
+        smtpObj.sendmail(sender, receivers, message.as_string())
+        print "邮件发送成功"
+    except smtplib.SMTPException:
+        print "Error: 无法发送邮件"
