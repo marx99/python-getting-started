@@ -209,4 +209,20 @@ def qiandao_115_15694636714():
     
 @engine.define
 def send_mail_test():
-    sendmail_local('title标题','虫哦你特纳那天')
+    #sendmail_local('title标题','虫哦你特纳那天')
+    sender = '15942888252@139.com'  
+    receiver = '15942888252@139.com'  
+    subject = '这是一个测试邮件1 from leancn'  
+    smtpserver = 'smtp.139.com'  
+    username = '15942888252@139.com'
+    password = '6547899x'
+
+    msg = MIMEText('中文需参数‘utf-8’，单字节字符不需要 ','text','utf-8')#中文需参数‘utf-8’，单字节字符不需要  
+    msg['Subject'] = Header(subject, 'utf-8')  
+
+    smtp = smtplib.SMTP()  
+    smtp.connect(smtpserver)  
+    smtp.login(username, password)  
+    smtp.sendmail(sender, receiver, msg.as_string())  
+    smtp.quit()  
+    print("send mail OK!")
