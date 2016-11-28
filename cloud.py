@@ -41,7 +41,7 @@ def sendmail_local(subject,content):
     receiver = os.environ['sendmail_from_mail'] 
     #subject = 'python email test'  
     
-    smtpserver = 'smtp.126.com'  
+    smtpserver = os.environ['sendmail_smtpserver']
     username = os.environ['sendmail_from_mail']  
     password = os.environ['sendmail_from_password']  
     
