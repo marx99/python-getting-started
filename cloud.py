@@ -76,7 +76,7 @@ def qiandao_jd():
 #    print(geturl)
     jd_result = requests.get(geturl,headers = headers,verify=False)
     print(jd_result.json())  
-    sendmail_local('qiandao_jd',jd_result.json())
+    #sendmail_local('qiandao_jd',jd_result.json())
     
 @engine.define
 def qiandao_115_xiaohao(**params):
@@ -109,7 +109,7 @@ def qiandao_115_xiaohao(**params):
     getr = requests.get(geturl,headers = headers)
     
     print(getr.json())
-    sendmail_local('qiandao_115_135555',str(r1.json()) + str(getr.json()))
+    #sendmail_local('qiandao_115_135555',str(r1.json()) + str(getr.json()))
     
 @engine.define
 def qiandao_guorn(**params):
@@ -164,7 +164,7 @@ def qiandao_115(userid):
     
     print('sign ' + userid,sign_str.status_code)
     
-    time.sleep(10)
+    time.sleep(15)
     
     #post
     postheaders = {
@@ -197,31 +197,12 @@ def qiandao_115(userid):
     print( 'get result ' + userid,get_str.status_code,get_str.json())
     
     #send mail
-    sendmail_local('115_qiandao:' + userid , str(postr.json()) + str(get_str.json()))
+    #sendmail_local('115_qiandao:' + userid , str(postr.json()) + str(get_str.json()))
  
-
 @engine.define
 def qiandao_115_15694636714():
     qiandao_115('15694636714')
     
 @engine.define
-def send_mail_test():
-    #sendmail_local('title标题','虫哦你特纳那天')
-    sender = 'from@runoob.com'
-    receivers = ['15942888252@139.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
-
-    # 三个参数：第一个为文本内容，第二个 plain 设置文本格式，第三个 utf-8 设置编码
-    message = MIMEText('Python 邮件发送测试...', 'plain', 'utf-8')
-    message['From'] = Header("菜鸟教程", 'utf-8')
-    message['To'] =  Header("测试", 'utf-8')
-
-    subject = 'Python SMTP 邮件测试'
-    message['Subject'] = Header(subject, 'utf-8')
-
-
-    try:
-        smtpObj = smtplib.SMTP('localhost')
-        smtpObj.sendmail(sender, receivers, message.as_string())
-        print "邮件发送成功"
-    except smtplib.SMTPException:
-        print "Error: 无法发送邮件"
+def qiandao_115_13555925():
+    qiandao_115('13555925')
