@@ -144,10 +144,7 @@ cookies = {
 
 def qiandao_115(userid):
      # 签到
-    proxies = {
-        "http": "http://q:lixil@10.88.42.18:8080"
-    }
-    
+   
     #login
     sign_headers = {
         'Host': '115.com',
@@ -163,7 +160,7 @@ def qiandao_115(userid):
     }
     sign_url = 'http://115.com/?ct=sign'
     
-    sign_str = requests.get(sign_url,headers = sign_headers,proxies=proxies)
+    sign_str = requests.get(sign_url,headers = sign_headers)
     
     print('sign ' + userid,sign_str.status_code)
     
@@ -187,7 +184,7 @@ def qiandao_115(userid):
     }
     
     posturl='http://web.api.115.com/user/sign'
-    postr = requests.post(posturl,headers = postheaders,proxies=proxies)
+    postr = requests.post(posturl,headers = postheaders)
     print( 'post ' + userid,postr.status_code,postr.json())
     
     time.sleep(2)
@@ -196,7 +193,7 @@ def qiandao_115(userid):
     #geturl = 'http://web.api.115.com/user/sign?start=2016-11-01&_=1478610072924'
     geturl = 'http://web.api.115.com/user/sign?start='+ time.strftime('%Y-%m-01') +'&_=' + str(round(time.time()*1000))
     #result output
-    get_str = requests.get(geturl,headers = postheaders,proxies=proxies)
+    get_str = requests.get(geturl,headers = postheaders)
     print( 'get result ' + userid,get_str.status_code,get_str.json())
     
     #send mail
