@@ -6,19 +6,9 @@ import requests
 from app import app
 import time
 import smtplib  
-from email.mime.text import MIMEText  
-from email.header import Header  
 import os
 
 engine = Engine(app)
-
-@engine.define
-def printtest(**params):
-    if 'name' in params:
-        print ('Hello, {}!'.format(params['name']))
-    else:
-        #log.info('log.info')
-        print ('Hello, LeanCloud!')
 
 @engine.define
 def hello(**params):
@@ -36,29 +26,22 @@ def before_todo_save(todo):
     if len(content) >= 240:
         todo.set('content', content[:240] + ' ...')
 
-def sendmail_local(subject,content):
-    sender = os.environ['sendmail_to_mail'] 
-    receiver = os.environ['sendmail_from_mail'] 
-    #subject = 'python email test'  
-    
-    smtpserver = os.environ['sendmail_smtpserver']
-    username = os.environ['sendmail_from_mail']  
-    password = os.environ['sendmail_from_password']  
-    
-    #os.environ['LEANCLOUD_APP_ID']
-    
-    msg = MIMEText(content,'text','utf-8')#中文需参数‘utf-8’，单字节字符不需要  
-    msg['Subject'] = Header(subject, 'utf-8')  
+def sendmail(title,content):
       
     try:   
-        smtp = smtplib.SMTP()  
-        smtp.connect(smtpserver)  
-        smtp.login(username, password)  
-        smtp.sendmail(sender, receiver, msg.as_string())  
-        smtp.quit()  
-        print('sendmail OK!')
-    except smtplib.SMTPException:
-        print ("Error: sendmail error")
+        mail_url='http://womai123.com.cn/phpmail/sendmail.php'
+        data={
+            #'toemail':'1',
+            'title':title,
+            'content':content
+        }
+        mail_result = requests.post(mail_url,data=data)
+        if(mail_result.text == ''):
+            print("Sendmail: Error")
+        else:
+            print("Sendmail: OK!")   
+    except :
+        print("Sendmail: Error")
 
 @engine.define
 def qiandao_jd():
@@ -76,41 +59,8 @@ def qiandao_jd():
 #    print(geturl)
     jd_result = requests.get(geturl,headers = headers,verify=False)
     print(jd_result.json())  
-    #sendmail_local('qiandao_jd',jd_result.json())
-    
-@engine.define
-def qiandao_115_xiaohao(**params):
-    
-    #115签到
-    #小号：13555...
-    headers={
-        'Host': 'web.api.115.com',
-        'Connection': 'keep-alive',
-        'Content-Length': '0',
-        'Pragma': 'no-cache',
-        'Cache-Control': 'no-cache',
-        'Accept': '*/*',
-        'Origin': 'http://web.api.115.com',
-        'X-Requested-With': 'XMLHttpRequest',
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 4.4.4; 2014811 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36 115disk/6.2.1',
-        'Referer': 'http://web.api.115.com/bridge_2.0.html?namespace=FS.DataSrv&api=UDataAPI&_t=v5',
-        'Accept-Encoding': 'gzip,deflate',
-        'Accept-Language': 'zh-CN,en-US;q=0.8',
-        'Cookie': 'ssov_590519292=0_590519292_e41cbbf54df9d773385c0492dc79c354; OOFA=SEID=7eb6ba018b0be0e9869af0ed02957d3cc4e96181543d97ab691c2aa195349a0abb650769e034a4b0ea53c142be74ddbbb29104fcc6465c937894a842; SEID=7eb6ba018b0be0e9869af0ed02957d3cc4e96181543d97ab691c2aa195349a0abb650769e034a4b0ea53c142be74ddbbb29104fcc6465c937894a842; UID=590519292_F1_1477144725; CID=3eee667f5650c9315a1961ec7d5efcff',
-    }
-    
-    url115 = 'http://web.api.115.com/user/sign'
-    s = requests.Session()
-    r1= s.post(url115,headers=headers)
-    print ('qiandao_115_135555 ',r1.status_code,r1.json())
+    #sendmail('qiandao_jd',jd_result.json())
 
-    #geturl = 'http://web.api.115.com/user/sign?start=2016-11-01&_=1478610072924'
-    geturl = 'http://web.api.115.com/user/sign?start='+ time.strftime('%Y-%m-01') +'&_=' + str(round(time.time()*1000))
-    getr = requests.get(geturl,headers = headers)
-    
-    print(getr.json())
-    #sendmail_local('qiandao_115_135555',str(r1.json()) + str(getr.json()))
-    
 @engine.define
 def qiandao_guorn(**params):
     
@@ -197,7 +147,7 @@ def qiandao_115(userid):
     print( 'get result ' + userid,get_str.status_code,get_str.json())
     
     #send mail
-    #sendmail_local('115_qiandao:' + userid , str(postr.json()) + str(get_str.json()))
+    sendmail('115_qiandao_' + userid , str(postr.json()) + '<br>' + str(get_str.json()))
  
 @engine.define
 def qiandao_115_15694636714():
