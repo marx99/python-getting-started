@@ -5,8 +5,9 @@ from leancloud import LeanEngineError
 import requests
 from app import app
 import time
-import smtplib  
+#import smtplib  
 import os
+import sqlite3API
 
 engine = Engine(app)
 
@@ -43,25 +44,6 @@ def sendmail(title,content):
     except :
         print("Sendmail: Error")
 
-@engine.define
-def qiandao_jd():
-    
-    headers={
-        'Host': 'gw-e.jd.com',
-        'Connection': 'Keep-Alive',
-        'User-Agent': 'JDRead 2.6.3 rv: (android; android OS 4.4.4; zh_CN)',
-        'Cookie': 'wskey=AAFYLGPZAEBR6ylOakGVtcRiV_zeGiN1ktIVhKxd2QLVy67AGwGJnSf011hv4txqqVqCQRMTelqMkZzmqCsLT4ZWPD2ZLtPj',
-        'Cookie2': '$Version=1',
-        'Accept-Encoding': 'gzip'    
-    }
-    geturl = 'https://gw-e.jd.com/client.action?build=&osVersion=4.4.4&jds=' + str(round(time.time() * 1000)) + '&functionId=signGetScore&clientVersion=2.6.3&subunionId=yd001&appId=1&os=android&client=android&uuid=867622023933180-9c99a0b5ebd5&unionId=350268299&model=2014811&brand=Xiaomi&screen=720*1280'
-    
-#    print(geturl)
-    jd_result = requests.get(geturl,headers = headers,verify=False)
-    print(jd_result.json())  
-    #sendmail('qiandao_jd',jd_result.json())
-
-@engine.define
 def qiandao_guorn(**params):
     
     headers={
@@ -86,7 +68,6 @@ def qiandao_guorn(**params):
        
 #115 qiandao
 cookies = {
-    '15942888': 'OOFA=UID=4158054_F1_1479007096; UID=4158054_F1_1479007096; CID=9cd9bb99b3101593697536c1b6a0e233; SEID=a94f79f65a4bed45cbff606930239896f115df9d81b7bafae1f34d66b87108123c35ceed4adb846076d9e1024d5c82721e2e62fcea6693104e3378ad; ssov_4158054=0_4158054_e4b7e5bba4f3176fa4343b12dd42aa3b',
     '13555925': 'ssov_590519292=0_590519292_e41cbbf54df9d773385c0492dc79c354; OOFA=SEID=7eb6ba018b0be0e9869af0ed02957d3cc4e96181543d97ab691c2aa195349a0abb650769e034a4b0ea53c142be74ddbbb29104fcc6465c937894a842; SEID=7eb6ba018b0be0e9869af0ed02957d3cc4e96181543d97ab691c2aa195349a0abb650769e034a4b0ea53c142be74ddbbb29104fcc6465c937894a842; UID=590519292_F1_1477144725; CID=3eee667f5650c9315a1961ec7d5efcff',
     '18640815': 'CID=75a2513cf5f55d0eb20510d701e354ed; SEID=e4bee56b359d5fbe50814a98857617657ffda3200e72e804f66a9a8e22edaf851a000ee6b79bd77e2630fb9c784bfa618700d78d5f4039bfad9ab17f; ssov_592637961=0_592637961_ed7d57ec15b95004e985cae17b31a407; UID=592637961_H1_1478431292',
     '15694636714': 'CID=d88b040909b38a3d14c7fa78cc6032aa; SEID=354b4a3fc4f04389f3e5e5814e92f5d40e46893a0fcc55865d1de79f21ccb405acd2c1e73b9f311f1476cbeceebef8c5539f3f489923737acb6d2330; ssov_592637924=0_592637924_890a4b2e72593f4e25ee9a16149b45d1; UID=592637924_H1_1478958011'
@@ -148,11 +129,14 @@ def qiandao_115(userid):
     
     #send mail
     sendmail('115_qiandao_' + userid , str(postr.json()) + '<br>' + str(get_str.json()))
- 
-@engine.define
-def qiandao_115_15694636714():
-    qiandao_115('15694636714')
     
 @engine.define
 def qiandao_115_13555925():
     qiandao_115('13555925')
+
+@engine.define
+def test_sqlite3():
+    sql = 'select * from student order by RANDOM() limit 2'
+    DB_FILE_PATH = 'hongten.db'
+    conn = sqlite3API.get_conn(DB_FILE_PATH)
+    sqlite3API.fetchall(conn,sql)
