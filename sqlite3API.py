@@ -153,6 +153,7 @@ def fetchall(conn, sql):
         if len(r) > 0:
             for e in range(len(r)):
                 print(r[e])
+                print(r[e][4].encode('gb2312'))                
     else:
         print('the [{}] is empty or equal None!'.format(sql)) 
 
